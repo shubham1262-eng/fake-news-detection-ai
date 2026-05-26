@@ -1,0 +1,12 @@
+streamlit
+pandas
+scikit-learn
+validators
+textblob
+langdetect
+pillow
+plotly
+newspaper3k
+requests
+beautifulsoup4
+lxml

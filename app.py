@@ -6,10 +6,29 @@ from textblob import TextBlob
 from langdetect import detect
 from PIL import Image
 import plotly.express as px
-from newspaper import Article
 import re
 import requests
 from bs4 import BeautifulSoup
+
+def get_article(url):
+    try:
+        headers = {"User-Agent": "Mozilla/5.0"}
+        r = requests.get(url, headers=headers, timeout=5)
+
+        soup = BeautifulSoup(r.text, "html.parser")
+
+        paragraphs = soup.find_all("p")
+        text = " ".join([p.get_text() for p in paragraphs])
+
+        title = soup.title.text if soup.title else "News Article"
+
+        if len(text) < 50:
+            return "Low Quality Source", "Not enough content"
+
+        return title, text
+
+    except:
+        return "Unreachable Source", "Unable to fetch article"
 
 # ---------------- UI ---------------- #
 
